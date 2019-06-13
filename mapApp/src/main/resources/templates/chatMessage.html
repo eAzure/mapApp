@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>“脚步·生活”后台管理网站</title>
+  <link rel="stylesheet" href="../css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">“脚步·生活”后台管理网站</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg" class="layui-nav-img">
+          欢迎使用
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="login">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">管理项目</a>
+          <dl class="layui-nav-child">
+            <dd><a href="positionManage">位置管理</a></dd>
+            <dd><a href="traceManage">轨迹管理</a></dd>
+            <dd><a href="chatMessage">消息管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="aboutme">信息反馈</a></li>
+        <li class="layui-nav-item"><a href="aboutme">关于我们</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!--编写里面组件的部分-->
+  <div class="layui-body">
+  	<div id="posPage" class="hide">
+            <table width="1000" border="1" cellspacing="0" class="layui-table">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>用户ID</th>
+                        <th>聊天信息</th>
+                        <th>聊天时间</th>
+                        <th>删除</th>
+                    </tr>
+                </thead>
+                <tbody id="tbMain"></tbody>
+            </table>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+  </div>
+</div>
+<script src="../layui.js"></script>
+
+<script>
+//JavaScript代码区域
+	var per="";
+    var tbody="";
+    
+    
+    var xmlReq=new XMLHttpRequest();
+    xmlReq.timeout=5000;
+    xmlReq.ontimeout=function(event){
+          alert("请求超时!");
+    }
+    var url="/user/findTheMessageList";
+    xmlReq.open("GET",url);
+    xmlReq.send();
+    xmlReq.onreadystatechange=function(){
+    if(xmlReq.readyState==4&&xmlReq.status==200){
+        per=JSON.parse(xmlReq.responseText);
+        console.log(per);
+        transDataToTable();
+    }
+    }
+    
+    
+
+    //从后台获取数据
+
+    //从数据库中动态的获取数据
+    //模拟一段JSON数据，实际要从数据库中读取
+    function transDataToTable(){
+    	 tbody= document.getElementById('tbMain');
+		 console.log(per.length)
+    	for (var i = 0; i < per.length; i++) { //遍历一下json数据
+        	var trow = getDataRow(per[i]); //定义一个方法,返回tr数据
+        	tbody.appendChild(trow);
+   	 	}
+    }    
+    
+
+    function getDataRow(h) {
+        var row = document.createElement('tr'); //创建行
+
+        var idCell = document.createElement('td'); //创建第一列id
+        idCell.innerHTML = h.recordID; //填充数据
+        row.appendChild(idCell); //加入行  ，下面类似
+
+        var longitudeCell = document.createElement('td');//创建第二列用户ID
+        longitudeCell.innerHTML = h.userID;
+        row.appendChild(longitudeCell);
+
+        var latitudeCell = document.createElement('td');//创建第三列聊天信息
+        latitudeCell.innerHTML = h.chatContent;
+        row.appendChild(latitudeCell);
+        
+        var contentCell = document.createElement('td');//创建第四列聊天时间
+        contentCell.innerHTML = h.chatTime;
+        row.appendChild(contentCell);
+        
+        
+        
+        
+        
+        //到这里，json中的数据已经添加到表格中，下面为每行末尾添加删除按钮
+        
+        
+		
+		
+        var delCell = document.createElement('td');//创建第五列，操作列
+        row.appendChild(delCell);
+        var btnDel = document.createElement('input'); //创建一个input控件
+        btnDel.setAttribute('type', 'button'); //type="button"
+        btnDel.className='layui-btn layui-btn-danger';
+        btnDel.setAttribute('value', '删除');
+
+        //删除操作
+        btnDel.onclick = function () {
+            if (confirm("确定删除这一行嘛？")) {
+                //找到按钮所在行的节点，然后删掉这一行
+                //找到该一行的newsId
+                console.log(h.recordID);
+                this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+                //btnDel - td - tr - tbody - 删除(tr)
+                //刷新网页还原。实际操作中，还要删除数据库中数据，实现真正删除
+                //使用XMLHttpRequest方法进行访问，进行页面的真正删除
+                var xmlReq=new XMLHttpRequest();
+                xmlReq.timeout=5000;
+                xmlReq.ontimeout=function(event){
+                	alert("请求超时!");
+                }
+                var url="/user/remvTheChatMessage?RecordID="+h.recordID;
+                xmlReq.open("GET",url);
+                xmlReq.send();  
+                xmlReq.onreadystatechange=function(){
+                	if(xmlReq.readyState==4&&xmlReq.status==200){
+        				var xmlReqUpdate=new XMLHttpRequest();
+        				xmlReqUpdate.timeout=5000;
+        				xmlReqUpdate.ontimeout=function(event){
+        					alert("请求超时！");
+        				}
+        				var urlUpdate="/user/chanChatMessageRecordID";
+        				xmlReqUpdate.open("GET",urlUpdate);
+                		xmlReqUpdate.send();
+                		xmlReqUpdate.onreadystatechange=function(){
+                			if(xmlReqUpdate.readyState==4&&xmlReqUpdate.status==200){
+                				window.location.reload();
+                				alert("删除成功！");
+                			}
+                		}
+    				}
+                }
+            }
+        }
+        delCell.appendChild(btnDel);  //把删除按钮加入td，别忘了
+        return row; //返回tr数据	 
+    }
+    
+    
+    
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>“脚步·生活”后台管理网站</title>
+  <link rel="stylesheet" href="../css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">“脚步·生活”后台管理网站</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg" class="layui-nav-img">
+          欢迎使用
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="login">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">管理项目</a>
+          <dl class="layui-nav-child">
+            <dd><a href="positionManage">位置管理</a></dd>
+            <dd><a href="traceManage">轨迹管理</a></dd>
+            <dd><a href="chatMessage">消息管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="aboutme">信息反馈</a></li>
+        <li class="layui-nav-item"><a href="aboutme">关于我们</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" >
+  <div style="text-align:center;font-size:35px;">
+    <text>欢迎使用“脚步·生活”管理系统</text>
+  </div>
+  <div style="text-align:center;">
+    <img src="../godness1.png"  ></img>
+  </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+  </div>
+</div>
+<script src="../layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

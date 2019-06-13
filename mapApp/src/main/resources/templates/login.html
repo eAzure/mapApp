@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>“脚步·生活”后台管理网站</title>
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+}
+#wrap {
+	height: 719px;
+	width: 100;
+	background-image: url(../4.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	position: relative;
+}
+#head {
+	height: 120px;
+	width: 100;
+	background-color: #66CCCC;
+	text-align: center;
+	position: relative;
+}
+#foot {
+	width: 100;
+	height: 126px;
+	background-color: #CC9933;
+	position: relative;
+}
+#wrap .logGet {
+	height: 408px;
+	width: 368px;  
+	position: absolute;
+	background-color: #FFFFFF;
+	top: 20%;
+	right: 15%;
+}
+.logC a button {
+	width: 100%;
+	height: 45px;
+	background-color: #ee7700;
+	border: none;
+	color: white;
+	font-size: 18px;
+}
+.logGet .logD.logDtip .p1 {
+	display: inline-block;
+	font-size: 28px;
+	margin-top: 30px;
+	width: 86%;
+}
+#wrap .logGet .logD.logDtip {
+	width: 86%;
+	border-bottom: 1px solid #ee7700;
+	margin-bottom: 60px;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.logGet .lgD img {
+	position: absolute;
+	top: 12px;
+	left: 8px;
+}
+.logGet .lgD input {
+	width: 100%;
+	height: 42px;
+	text-indent: 2.5rem;
+}
+#wrap .logGet .lgD {
+	width: 86%;
+	position: relative;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#wrap .logGet .logC {
+	width: 86%;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
+}
+ 
+ 
+.title {
+	font-family: "宋体";
+	color: #FFFFFF;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);  /* 使用css3的transform来实现 */
+	font-size: 36px;
+	height: 40px;
+	width: 30%;
+}
+.div-inline{ display:inline} 
+.copyright {
+	font-family: "宋体";
+	color: #FFFFFF;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);  /* 使用css3的transform来实现 */
+	height: 60px;
+	width: 40%;
+	text-align:center;
+}
+	
+ 
+#foot .copyright .img {
+	width: 100%;
+	height: 24px;
+	position: relative;
+}
+.copyright .img .icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-left: 22px;
+	vertical-align: middle;
+	background-image: url(%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6.png);
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+	
+.copyright .img .icon1 {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-left: 22px;
+	vertical-align: middle;
+	background-image: url(%E5%9C%B0%E5%9D%80.png);
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.code{   
+    background-image:url(code.jpg);   
+    font-family:Arial;   
+    font-style:italic;   
+    color:Red;   
+    border:0;   
+    padding:2px 3px;   
+    letter-spacing:3px;   
+    font-weight:bolder;   
+}   
+.unchanged{   
+    border:0;   
+}   
+.copyright .img .icon2 {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-left: 22px;
+	vertical-align: middle;
+	background-image: url(%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F.png);
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+#foot .copyright p {
+	height: 24px;
+	width: 100%;
+}
+</style>
+</head>
+ 
+<body onLoad="createCode()">
+<div class="header" id="head">
+  <div class="title">“脚步·生活”后台管理网站</div>
+	
+</div>
+	
+<div class="wrap" id="wrap">
+	<div class="logGet">
+			<!-- 头部提示信息 -->
+			<div class="logD logDtip">
+				<p class="p1">登录</p>
+			</div>
+			<!-- 输入框 -->
+			<div class="lgD">
+				<input type="text"
+					placeholder="输入用户名" id="userNickNameInput" />
+			</div>
+			<div class="lgD">
+				<input type="password"
+					placeholder="输入用户密码" id="userPassWordInput"/>
+			</div>
+			<div class="lgD">
+				<input type="text"
+					placeholder="输入验证码" id="validCode"/>
+			</div>
+			
+			<div class="lgD">
+				<input type="text"
+					onclick="createCode()" readonly="readonly" id="checkCode" class="unchanged" style="width: 160px;cursor:pointer"/>
+			</div>
+			<div class="logC">
+				<a ><button onclick="login()">登 录</button></a>
+			</div>
+			<div class="logC" style=" margin-top: 20px">
+				<a ><button onclick="regist()">注 册</button></a>
+			</div>
+			
+			
+		</div>
+</div>
+	
+<div class="footer" id="foot">
+  <div class="copyright">
+    <p>Copyright © 2019 Qunar.com Inc. All Rights Reserved.</p>
+ 
+ 
+  </div>
+	
+</div>
+		
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<script type="text/javascript">
+	var code;//定义验证码
+	
+	//制造验证码
+	function createCode(){
+	   code = "";   
+       var codeLength = 6;//验证码的长度   
+       var checkCode = document.getElementById("checkCode");   
+       var selectChar = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');//所有候选组成验证码的字符，当然也可以用中文的      
+       for(var i=0;i<codeLength;i++)   
+       {   
+        var charIndex = Math.floor(Math.random()*36);   
+        code +=selectChar[charIndex];   
+       }    
+       if(checkCode)   
+       {   
+         checkCode.className="code";   
+         checkCode.value = code;
+         checkCode.blur();   
+       } 
+	}
+	
+	function login(){
+		//获取输入框里的值（包括验证码）
+		var getInputValue=document.getElementById("userNickNameInput").value;
+		var getpassWordInputValue=document.getElementById("userPassWordInput").value;
+		var getRandomInputValue=document.getElementById("validCode").value;
+		if(!getInputValue||!getpassWordInputValue){
+			alert("用户名或密码不能为空！")
+		}else if(getRandomInputValue!=code||getRandomInputValue.length<=0){
+			alert("请输入验证码或输入正确的验证码！");
+			createCode();
+		}else{
+		//与后台进行信息的交互
+			//alert(getInputValue+" "+getpassWordInputValue)
+			
+			var xmlReq=new XMLHttpRequest();
+			xmlReq.timeout=5000;
+			xmlReq.ontimeout=function(event){
+				alert("请求超时！");
+			}
+			//ID的话传递1即可，因为我在后台判断时也并未判断这个ID
+			//去掉两引号
+			getInputValue= getInputValue.replace(/\"/g, "");
+			getpassWordInputValue= getpassWordInputValue.replace(/\"/g, "");
+			var url="/user/judgeTheManager?UserName="+getInputValue+"&UserPassword="+getpassWordInputValue;
+			xmlReq.open("GET",url);
+			xmlReq.send();
+			xmlReq.onreadystatechange=function(){
+				if(xmlReq.readyState==4&&xmlReq.status==200){
+					//能传过去参后，但这时不要以为截止了，因为我们要看他返回的判断的信息
+					if(xmlReq.responseText){
+					alert("登陆成功");
+					//登陆成功后点击确定按钮进行页面的跳转，并将用户名传递过来
+					window.location.href="first";
+					}
+				}
+			}
+		}
+	}
+	function regist(){
+        window.location.href="http://localhost:8080/user/regist";
+	}
+	//下面实现验证码
+	
+	
+</script>
+</html>

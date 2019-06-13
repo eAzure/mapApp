@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--上面2行的是约束依赖，固定照抄就好-->
+<!--下面的才是要自己编写的地方-->
+<!--写mapper的配置文件第一步就是要写<mapper></mapper>标签-->
+<!--<mapper></mapper>标签里包含着各个CURD操作的SQL语句-->
+    <!-- 文件上传配置 -->
+
+<mapper namespace="com.example.demo.UserMapper">
+    <!--定义一个名为BaseResultMap的返回类型-->
+    <resultMap id="BaseResultMap" type="com.example.demo.User">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="age" property="age" jdbcType="INTEGER"></result>
+    </resultMap>
+ 	<!-- 定义我的位置的格式 -->
+ 	<resultMap id="myPositionBaseResultMap" type="com.example.demo.myPosition">
+ 		<id column="RecordID" property="RecordID" jdbcType="INTEGER"></id>
+ 		<result column="MyLatitude" property="MyLatitude" jdbcType="LONGVARCHAR"></result>
+ 		<result column="MyLongitude" property="MyLongitude" jdbcType="LONGVARCHAR"></result>
+ 		<result column="MyRecordContent" property="MyRecordContent" jdbcType="LONGVARCHAR"></result>
+ 		<result column="RecordTime" property="RecordTime" jdbcType="LONGVARCHAR"></result>
+ 		<result column="Day" property="Day" jdbcType="LONGVARCHAR"></result>
+ 		<result column="PicturePos" property="PicturePos" jdbcType="LONGVARCHAR"></result>
+ 		<result column="Name" property="Name" jdbcType="LONGVARCHAR"></result>
+ 		<result column="Desname" property="Desname" jdbcType="LONGVARCHAR"></result>
+ 		<result column="UserID" property="UserID" jdbcType="INTEGER"></result>
+ 		<result column="OpenID" property="OpenID" jdbcType="LONGVARCHAR"></result>
+ 		<result column="ConcreteID" property="ConcreteID" jdbcType="INTEGER"></result>
+ 	</resultMap>
+ 	<!-- 定义是哪一天的格式 -->
+ 	<resultMap id="myDayBaseResultMap" type="com.example.demo.Day">
+ 		<result column="Day" property="Day" jdbcType="LONGVARCHAR"></result>
+ 	</resultMap>
+ 	<!-- 定义我的轨迹的格式 -->
+ 	<resultMap type="com.example.demo.myPerTrace" id="myPerTraceBaseResultMap">
+ 		<id column="TraceID" property="TraceID" jdbcType="INTEGER"></id>
+ 		<result column="Longitude" property="Longitude" jdbcType="LONGVARCHAR"></result>
+ 		<result column="Latitude" property="Latitude" jdbcType="LONGVARCHAR"></result>
+ 		<result column="TheFirstDate" property="TheFirstDate" jdbcType="DATE"></result>
+ 	</resultMap>
+ 	<!-- 定义管理者的格式 -->
+ 	<resultMap id="ManageUserBaseResultMap" type="com.example.demo.ManageUser">
+ 		<id column="UserID" property="UserID" jdbcType="INTEGER"></id>
+ 		<result column="UserName" property="UserName" jdbcType="LONGVARCHAR"></result>
+ 		<result column="UserPassword" property="UserPassword" jdbcType="LONGVARCHAR"></result>
+ 	</resultMap>
+ 	<!-- 定义聊天的格式 -->
+ 	<resultMap id="ChatBaseResultMap" type="com.example.demo.chatContent">
+ 		<id column="RecordID" property="RecordID" jdbcType="INTEGER"></id>
+ 		<result column="UserID" property="UserID" jdbcType="INTEGER"></result>
+ 		<result column="ChatContent" property="ChatContent" jdbcType="LONGVARCHAR"></result>
+ 		<result column="ChatTime" property="ChatTime" jdbcType="LONGVARCHAR"></result>
+ 	</resultMap>
+ 	
+    <!--插入语句-->
+    <!--id要与UserMapper文件中表示插入的函数名一致，parameterType表示函数的输入参数的类型-->
+    <insert id="insertUser" parameterType="com.example.demo.User">
+      insert into texttable(id,name,age)values(#{id,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},#{age,jdbcType=INTEGER})/*SQL语句*/
+    </insert>
+ 
+ 	<!-- 插入我标记的位置的信息 -->
+ 	<insert id="insertMyTargetPosition" parameterType="com.example.demo.myPosition">
+ 		insert into myPosition(RecordID,MyLatitude,MyLongitude,MyRecordContent,RecordTime,Day,PicturePos,Name,Desname,UserID,OpenID,ConcreteID) values(#{RecordID,jdbcType=INTEGER},#{MyLatitude,jdbcType=LONGVARCHAR},#{MyLongitude,jdbcType=LONGVARCHAR},#{MyRecordContent,jdbcType=LONGVARCHAR},#{RecordTime,jdbcType=LONGVARCHAR},#{Day,jdbcType=LONGVARCHAR},#{PicturePos,jdbcType=LONGVARCHAR},#{Name,jdbcType=LONGVARCHAR},#{Desname,jdbcType=LONGVARCHAR},#{UserID,jdbcType=INTEGER},#{OpenID,jdbcType=LONGVARCHAR},#{ConcreteID,jdbcType=INTEGER})
+ 	</insert>
+ 	
+ 	<!-- 插入我所记录的轨迹的每一时刻的经纬度信息 -->
+ 	<insert id="insertMyPerTimeTrace" parameterType="com.example.demo.myPerTrace">
+ 		insert into myTrace(TraceID,Longitude,Latitude,TheFirstDate) values(#{TraceID,jdbcType=INTEGER},#{Longitude,jdbcType=LONGVARCHAR},#{Latitude,jdbcType=LONGVARCHAR},#{TheFirstDate,jdbcType=DATE})
+ 	</insert>
+ 	
+ 	
+ 	<!-- 返回聊天记录数量 -->
+ 	<select id="selectTheCountOfChat" resultType="int">
+ 		select count(*) from chatMessage
+ 	</select>
+ 	<!-- 插入聊天信息 -->
+    <insert id="insertMyChatContent" parameterType="com.example.demo.chatContent">
+    	insert into chatMessage(RecordID,UserID,ChatContent,ChatTime) values(#{RecordID,jdbcType=INTEGER},#{UserID,jdbcType=INTEGER},#{ChatContent,jdbcType=LONGVARCHAR},#{ChatTime,jdbcType=LONGVARCHAR})
+    </insert>
+    <!-- 返回聊天列表信息 -->
+ 	<select id="selectTheChatContent" resultMap="ChatBaseResultMap">
+ 		select * from chatMessage
+ 	</select>
+ 	
+ 	<!-- 删除消息列表里的信息 -->
+ 	<delete id="deleteTheChatMessage" parameterType="java.lang.Integer">
+ 		delete from chatMessage where RecordID=#{RecordID,jdbcType=INTEGER}
+ 	</delete>
+ 	<!-- 更改主键信息 -->
+ 	<update id="updateChatMessageRecordID">
+    	alter table chatMessage drop RecordID;
+    	alter table chatMessage add RecordID int(11) not null first;
+    	alter table chatMessage modify column RecordID int(11) not null auto_increment ,add  primary key(RecordID);
+    </update>
+ 	
+ 	
+ 	
+    <!--删除语句-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+      delete from texttable where id =#{id,jdbcType=INTEGER}
+    </delete>
+ 
+ 	<!-- 删除所记录的位置 -->
+ 	<delete id="deleteMyPosition" parameterType="java.lang.Integer">
+ 	  delete from myPosition where RecordID=#{RecordID,jdbcType=INTEGER}
+ 	</delete>
+ 	<!-- 更改主键的信息 -->
+ 	<update id="updateRecordID">
+    	alter table myPosition drop RecordID;
+    	alter table myPosition add RecordID int(11) not null first;
+    	alter table myPosition modify column RecordID int(11) not null auto_increment ,add  primary key(RecordID);
+    </update>
+    <!-- 更改RecordForUserID -->
+    <update id="updateRecordForUserID" parameterType="java.lang.Integer">
+     update myPosition set 	ConcreteID=ConcreteID-1 where ConcreteID>#{ConcreteID,jdbcType=INTEGER}
+    </update>
+    
+    
+    
+ 	
+ 	<!-- 删除轨迹点的操作 -->
+ 	<delete id="deleteMyTrace" parameterType="java.lang.Integer">
+ 	 delete from myTrace where TraceID=#{TraceID,jdbcType=INTEGER}
+ 	</delete>
+ 	<!-- 更改TraceID的操作 -->
+ 	<update id="updateTraceID" parameterType="java.lang.Integer">
+ 	 update myTrace set TraceID=TraceID-1 where TraceID>#{TraceID,jdbcType=INTEGER}
+ 	</update>
+ 		
+    <!--查找语句-->
+    <!--resultMap表示函数返回的类型-->
+    <select id="selectUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select * from texttable where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <!--查找语句-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from texttable
+    </select>
+    
+    <!-- 下面这一部分将实现多用户 -->
+    <!-- 先查询该用户的openID是否被存在在数据库里，若有的话则返回UserID -->
+    <select id="selectIfExitTheOpenID" parameterType="java.lang.String" resultType="int">
+    	select count(distinct UserID) from myPosition where OpenID=#{OpenID,jdbcType=LONGVARCHAR}
+    </select>
+    <!-- 若存在的话返回给用户的UserID -->
+    <select id="selectTheUserID" parameterType="java.lang.String" resultType="int">
+    	select distinct UserID from myPosition where OpenID=#{OpenID,jdbcType=LONGVARCHAR}
+    </select>
+    <!-- 若没有的话，则查询有多少用户数，根据用户数返给用户一个UserID -->
+    <select id="selectTheCountOfUser" resultType="int">
+    	select count(distinct UserID) from myPosition
+    </select>
+    
+    <!-- 查看一个用户下，它有多少条轨迹 -->
+    <select id="selectTheCountOfOneUserPosition" resultType="int">
+    	select count(*) from myPosition where UserID=#{UserID,jdbcType=INTEGER}
+    </select>
+    
+    
+    
+    <!-- 查看我的轨迹里有多少记录的轨迹信息 -->
+    <select id="selectCountOfMyTraceID" resultType="int">
+    	select count(distinct TraceID) from myTrace 
+    </select>
+    
+    <!-- 判断管理用户登录的信息 -->
+    <select id="searchManageUserInfo" resultMap="ManageUserBaseResultMap">
+    	select * from manageUser where UserName=#{UserName,jdbcType=LONGVARCHAR} and UserPassword=#{UserPassword,jdbcType=LONGVARCHAR}
+    </select>
+    
+    <!-- 查看其中一条路径的轨迹信息 -->
+    <select id="selectTheConcreteTrace" parameterType="java.lang.Integer" resultMap="myPerTraceBaseResultMap">
+    	select * from myTrace where TraceID=#{TraceID,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 取得每一条路径的第一个时间采样点的信息 -->
+    <select id="selectTheFirstTimeTrace" resultMap="myPerTraceBaseResultMap">
+    	select * from myTrace where TheFirstDate in (select min(TheFirstDate) from myTrace group by TraceID)
+    </select>
+    
+    <!-- 查看位置表里有多少条信息 -->
+    <select id="selectCountOfPos" resultType="int">
+    	select count(*) from myPosition
+    </select>
+    <!-- 查询在相同的天里的位置的信息并将其显示在位置列表里-->
+    <select id="selectTheDay" resultMap="myDayBaseResultMap">
+    	select distinct Day from myPosition where Day in (select Day from myPosition group by Day having count(1) >= 1)
+    </select>
+    <select id="selectThePositionLine" resultMap="myPositionBaseResultMap">
+    	select * from myPosition where Day=#{Day,jdbcType=LONGVARCHAR}
+    </select>
+    <select id="selectTheAllPositionRecord" resultMap="myPositionBaseResultMap">
+    	select *from myPosition
+    </select>
+    <select id="selectTheOnePositionRecord" resultMap="myPositionBaseResultMap">
+    	select *from myPosition where UserID=#{UserID,jdbcType=INTEGER} and ConcreteID=#{ConcreteID,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 查找单用户的位置记录信息 -->
+    <select id="selectForUserPositionRecord" resultMap="myPositionBaseResultMap">
+    	select *from myPosition where UserID=#{UserID,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 既然没办法显示获取，那就查看该条记录的ConcreteID -->
+    <select id="selectTheConcreteID" resultType="int">
+    	select ConcreteID from myPosition where UserID=#{UserID,jdbcType=INTEGER} and RecordID=#{RecordID,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 给管理者写一个查找某一具体位置的信息的功能 -->
+    <select id="selectTheForManagerConcretePos" resultMap="myPositionBaseResultMap">
+    	select *from myPosition where RecordID=#{RecordID,jdbcType=INTEGER}
+    </select>
+    
+    <!--修改语句-->
+    <update id="updateUser" parameterType="com.example.demo.User">
+        update texttable set name=#{name,jdbcType=VARCHAR},age=#{age,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+    </update>
+    
+    
+</mapper>

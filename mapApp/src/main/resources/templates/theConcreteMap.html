@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>“脚步·生活”后台管理网站</title>
+    <link rel="stylesheet" href="../css/layui.css">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+    <style>
+        html, body, #container {
+            height: 50%;
+            width: 100%;
+        }
+
+        .amap-icon img {
+            width: 25px;
+            height: 34px;
+        }
+
+        .amap-marker-label{
+        	color:#FF5722;
+        	font-weight:700;
+        	font-size:16px;
+            border: 0;
+            background-color: transparent;
+        }
+
+        .info{
+            position: relative;
+            top: 0;
+            right: 0;
+            min-width: 0;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">“脚步·生活”后台管理网站</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg" class="layui-nav-img">
+          欢迎使用
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="login">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">管理项目</a>
+          <dl class="layui-nav-child">
+            <dd><a href="positionManage">位置管理</a></dd>
+            <dd><a href="traceManage">轨迹管理</a></dd>
+            <dd><a href="chatMessage">消息管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="aboutme">信息反馈</a></li>
+        <li class="layui-nav-item"><a href="aboutme">关于我们</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" >
+  
+  	<!--上面一部分采用一半一半的横向布局的方式-->
+  	<div class="layui-row">
+    	<div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+      		<ul class="layui-timeline">
+      			
+      			<!--时间-->
+  				<li class="layui-timeline-item">
+    				<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+    				<div class="layui-timeline-content layui-text">
+      					<h3 class="layui-timeline-title" id="h1"></h3>
+        				<p id="date">
+        				</p>
+    				</div>
+  				</li>
+  				<!--地点-->
+  				<li class="layui-timeline-item">
+    				<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+    				<div class="layui-timeline-content layui-text">
+      					<h3 class="layui-timeline-title" id="h2"></h3>
+        				<p id="name">
+        				</p>
+        				<p id="desName">
+        				</p>
+    				</div>
+  				</li>
+  				<!--经纬度-->
+  				<li class="layui-timeline-item">
+    				<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+    				<div class="layui-timeline-content layui-text">
+      					<h3 class="layui-timeline-title" id="h3"></h3>
+        				<p id="lat">
+        				</p>
+        				<p id="lon">
+        				</p>
+    				</div>
+  				</li>
+  				<!--标记信息-->
+  				<li class="layui-timeline-item">
+    				<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+    				<div class="layui-timeline-content layui-text">
+      					<h3 class="layui-timeline-title" id="h4"></h3>
+        				<p id="message">
+        				</p>
+    				</div>
+  				</li>
+			</ul>
+    	</div>
+     	<div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+      		<div style="text-align:center;">
+    			<img id="pic" ></img>
+    		</div>
+    	</div>
+ 	</div>
+	
+	<!--地图的显示部分-->
+  	<div id="container"></div>
+  	
+	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=1c80f4c4a4c16dda8b47b374d1ac9a0e"></script>
+	<script type="text/javascript">
+	
+		var loc = location.href;
+  		var n1 = loc.length;//地址的总长度
+  		var n2 = loc.indexOf("=");//取得=号的位置
+  		var id = decodeURI(loc.substr(n2+1, n1-n2));//从=号后面的内容
+  		//这样就取得了后面传过来的recordID值了
+  		var map;
+  		var marker;
+  		var per;//获得的该点的详细数据
+  		var xmlReq=new XMLHttpRequest();
+        xmlReq.timeout=5000;
+        xmlReq.ontimeout=function(event){
+            alert("请求超时!");
+        }
+        console.log(id);
+        var url="/user/getTheForManagerPos?RecordID="+id;
+        xmlReq.open("GET",url);
+        xmlReq.send();
+        xmlReq.onreadystatechange=function(){
+        if(xmlReq.readyState==4&&xmlReq.status==200){
+              //alert(xmlReq.responseText);
+              per=JSON.parse(xmlReq.responseText);
+              //var latitudeAndlongitude="["+per[0].myLongitude+","+per[0].myLatitude+"]";
+              var latitudeAndlongitude=new Array(2);
+              latitudeAndlongitude[0]=per[0].myLongitude;
+              latitudeAndlongitude[1]=per[0].myLatitude;
+              var content=per[0].myRecordContent;
+              console.log(latitudeAndlongitude);
+              setValue();
+              markThePosition(latitudeAndlongitude,content);
+        }
+        }
+  		
+  		function markThePosition (latitudeAndlongitude,content){
+  			map = new AMap.Map('container', {
+        	resizeEnable: true,
+        	//这个center就是我们所标记的位置，这里注意要用this，否则的话它会将属性值设置为你后面的那个变量名
+        	center: latitudeAndlongitude,
+        	zoom: 20
+    		});
+    		marker = new AMap.Marker({
+        		position: map.getCenter(),
+        		icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+        		offset: new AMap.Pixel(-13, -30)
+    		});
+    		marker.setMap(map);
+    		// 设置鼠标划过点标记显示的文字提示
+    		marker.setTitle('我是marker的title');
+    		// 设置label标签
+    		// label默认蓝框白底左上角显示，样式className为：amap-marker-label
+    		marker.setLabel({
+        		offset: new AMap.Pixel(20, 20),  //设置文本标注偏移量
+        		content: "<div class='info'>"+content+"</div>", //设置文本标注内容
+        		direction: 'right' //设置文本标注方位
+    		});
+  		}
+  		
+  		function setValue()//对组件进行初始化赋值
+        {
+                   document.getElementById("h1").innerHTML="日期";
+                   document.getElementById("h2").innerHTML="地点";
+                   document.getElementById("h3").innerHTML="经纬度";
+                   document.getElementById("h4").innerHTML="标记信息";
+                   document.getElementById("date").innerHTML=per[0].day;
+                   document.getElementById("name").innerHTML=per[0].name;
+                   document.getElementById("desName").innerHTML=per[0].desname;
+                   document.getElementById("lat").innerHTML=per[0].myLatitude;
+                   document.getElementById("lon").innerHTML=per[0].myLongitude;
+                   document.getElementById("message").innerHTML=per[0].myRecordContent;
+                   document.getElementById("pic").src="http://47.102.218.151:8080/"+per[0].picturePos;
+        }
+	
+    	
+	</script>
+	
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+  </div>
+</div>
+<script src="../layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

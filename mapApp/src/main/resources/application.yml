@@ -1,0 +1,19 @@
+server:
+  port: 8080  #tomcat端口
+  #tomcat:
+    #max-http-post-size: -1
+  max-http-header-size: 4048576
+spring: #springboot的配置
+  datasource: #定义数据源
+    name: test
+    #127.0.0.1为本机测试的ip，3306是mysql的端口号。serverTimezone是定义时区，照抄就好，mysql高版本需要定义这些东西
+    #useSSL也是某些高版本mysql需要问有没有用SSL连接
+    url: jdbc:mysql://47.102.218.151:3306/map?serverTimezone=GMT%2B8&useSSL=FALSE&allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8
+    username: root  #数据库用户名，root为管理员
+    password: "password" #该数据库用户的密码
+    thymeleaf:
+              prefix:classpath:/templates/
+
+mybatis:  #mybatyis的配置
+  mapper-locations: classpath:mapper/*.xml #指定mapper的配置文件的路径是mapper文件夹下的所有 xml文件。
+  
