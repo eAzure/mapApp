@@ -1,0 +1,17 @@
+<!--pages/theXiangQingPage/theXiangQingPage.wxml-->
+<view class='cu-timeline'>
+<view class="dateGeshi">{{theRecordMessage[0].day}}</view>
+  <view class="cu-item">
+    <view class="content">
+      <view class="margin-top">用户编号：{{theRecordMessage[0].userID}}</view>
+      <view class="margin-top">位置地：{{theRecordMessage[0].name}}</view>
+      <view class="margin-top">位置：{{theRecordMessage[0].desname}}</view>
+      <view class='margin-top'>经度：{{theRecordMessage[0].myLongitude}}</view>
+      <view class='margin-top'>纬度：{{theRecordMessage[0].myLatitude}}</view>
+      <view class='margin-top'>记录信息：{{theRecordMessage[0].myRecordContent}}</view>
+    </view>
+  </view>
+  <view>
+  <image src='{{imageSrc}}'></image>
+  </view>
+</view>

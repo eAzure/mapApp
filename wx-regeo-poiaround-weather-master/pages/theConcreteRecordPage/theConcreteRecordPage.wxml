@@ -1,0 +1,23 @@
+<!--pages/theConcreteRecordPage/theConcreteRecordPage.wxml-->
+<view class="map_box">
+<view class="img_box">
+  <image src="{{src}}"></image>
+</view>
+</view>
+
+<view class="map_text">
+  <view class='map_content'>
+  <view>
+    <text class="h1">{{theRecordMessage[0].name}}</text>
+    <text>{{theRecordMessage[0].desname}}</text>
+  </view>
+  <view class="margin-tb-sm text-center"role=""aria-label="">
+     <button class="cu-btn round bg-olive"role="button" aria-label=""aria-disabled="false" bindtap='toTheXiangQingPage'>详情</button>
+  </view>
+  </view>
+</view>
+
+
+
+
+

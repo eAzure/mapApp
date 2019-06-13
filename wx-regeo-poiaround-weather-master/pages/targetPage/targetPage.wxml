@@ -1,0 +1,22 @@
+<text>所要记录的位置信息：</text>
+ <view class='person-line'></view>
+<view class="section">
+  <input style='font-size:15px' maxlength="30" placeholder="记录下你的心情吧：最大输入长度30" bindinput='getTheInputMessage'/>
+</view>
+<view class='separate'></view>
+
+<view class='labelNewsOrVideo'><image src='/img/评价-拍照.png' class='labelNewsOrVideoImageSize'></image><text bindtap='getLocalImage'>拍下该地方的照片吧！</text></view>
+
+ <view class='separate'></view>
+
+<image style='width:100%' src='{{img_path}}' mode='aspectFit'></image>
+<button
+  type="primary"
+  size="{{primarySize}}"
+  loading="{{loading}}"
+  plain="{{plain}}"
+  disabled="{{disabled}}"
+  bindtap='targetPosition'
+>
+  标记位置
+</button>

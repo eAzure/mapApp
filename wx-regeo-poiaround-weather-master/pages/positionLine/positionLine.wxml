@@ -1,0 +1,13 @@
+<!--pages/positionLine/positionLine.wxml-->
+<!--位置记录的界面想实现的效果为所标记的位置（心情代替）点击后可在静态图中标记出来-->
+<view class="cu-timeline">
+  
+  <block wx:for="{{theSameDay}}" wx:for-index="id">
+  <view class="cu-time">{{item.day}}</view>
+  <view class="cu-item cur icon-evaluate_fill" >  
+    <view id='{{id}}' class="content bg-green shadow-blur" bindtap='toTheConcretePage'>
+      <text id='{{id}}' >{{item.myRecordContent}}</text> 
+    </view>
+  </view>
+  </block>
+</view>

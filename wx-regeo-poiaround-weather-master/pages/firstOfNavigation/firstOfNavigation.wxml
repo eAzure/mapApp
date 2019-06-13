@@ -1,0 +1,17 @@
+<view class="section">
+  <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" bindtouchstart="bindInput" placeholder="搜索"/>
+</view>
+<view class="map_container">
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
+</view>
+<view class="map_text">
+  <view class='map_content'>
+  <view>
+    <text class="h1">{{textData.name}}</text>
+    <text>{{textData.desc}}</text>
+  </view>
+  <view class="margin-tb-sm text-center"role=""aria-label="">
+     <button class="cu-btn round bg-olive"role="button" aria-label=""aria-disabled="false" bindtap='toendOfNavigation'>出发地</button>
+  </view>
+  </view>
+</view>

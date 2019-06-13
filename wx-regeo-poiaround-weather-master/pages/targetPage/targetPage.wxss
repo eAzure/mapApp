@@ -1,0 +1,14 @@
+/* pages/targetPage/targetPage.wxss */
+/*这里是选择照片的标签栏*/
+.labelNewsOrVideo{
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.labelNewsOrVideoImageSize{
+  width: 70rpx;
+  height: 70rpx;
+}

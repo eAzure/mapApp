@@ -1,0 +1,41 @@
+/* pages/positionLine/positionLine.wxss */
+/*做位置记录的轴*/
+.cu-timeline{
+  display: block;
+  background-color: #fff;
+}
+.cu-timeline .cu-time{
+  width: 150rpx;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+  color: #888;
+  display: block;
+}
+.cu-timeline>.cu-time:not([class*="text-"]){
+  color:#ccc;
+}
+.cu-timeline>.cu-item{
+  padding: 30rpx 30rpx 30rpx 120rpx;
+  position: relative;
+  display: block;
+  z-index: 0;
+}
+text[class*="icon-"],view[class*="icon-"],button[class*="icon-"]{
+  font-family: "cuIcon" !important;
+  font-size: inherit;
+  font-style: normal;
+}
+.bg-green{
+  background-color: var(--green);
+  color: #fff;
+}
+.cu-timeline>.cu-item>.content{
+  padding: 30rpx;
+  border-radius:6rpx;
+  display: block;
+  line-height: 1.6;
+}
+.shadow-blur{
+  position: relative;
+}

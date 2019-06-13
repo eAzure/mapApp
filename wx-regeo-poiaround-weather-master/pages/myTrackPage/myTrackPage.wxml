@@ -1,0 +1,14 @@
+<!--pages/myTrackPage/myTrackPage.wxml-->
+<view class="cu-timeline">
+  
+  <block wx:for="{{initialTraceData}}" wx:for-index="id">
+  <view class="cu-item cur icon-evaluate_fill" >  
+    <view id='{{id}}' class="content bg-red shadow-blur" bindtap='toTheConcreteTracePage'>
+      <text id='{{id}}' >{{item.theFirstDate}}</text> 
+    </view>
+  </view>
+  </block>
+</view>
+<view class="text_box">
+  <view class="detail_button" bindtap="goStartRecord">{{statusOftheTask}}</view>
+</view>

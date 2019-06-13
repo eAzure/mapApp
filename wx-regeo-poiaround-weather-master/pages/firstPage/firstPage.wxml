@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<view class="cu-avatar lg round margin-left"style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);" bindtap="showModal" data-target="DrawerModalL"></view>
+<!--下面这一部分由我实现左抽屉-->
+
+
+<view class="cu-modal drawer-modal justify-start {{modalName=='DrawerModalL'?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog basis-lg" catchtap style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
+    <view class="cu-list menu text-left">
+      <view class="cu-item arrow" wx:for="{{tabList}}" wx:key wx:for-index="id">
+        <view class="content" id='{{id}}' bindtap='leftFunction'>
+          <view id='{{id}}'>{{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--实现左抽屉结束-->
+<view class="container">
+  <image class='avatar' src="/img/轨迹.png" style="opacity:{{0.7}}" bindtap='toMyTrackPage'></image>
+  <view class='flex' style='margin-top:80px'>
+    <button style='width:200px;opacity:{{0.7}};background-color:black;color:#fff' class='flex-sub padding-sm margin-xs radius' bindtap='toMyposition'>我的位置</button>
+    <button style='width:200px;opacity:{{0.7}};background-color:black;color:#fff' class='flex-sub padding-sm margin-xs radius' bindtap='toPositionRecord'>位置记录</button>
+  </view>
+  <view class='flex'>
+    <button style='width:200px;opacity:{{0.7}};background-color:black;color:#fff' class='flex-sub padding-sm margin-xs radius' bindtap='toTheHot'>附近热点</button>
+    <button style='width:200px;opacity:{{0.7}};background-color:black;color:#fff' class='flex-sub padding-sm margin-xs radius' bindtap='toTheRoute'>路线查询</button>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<!--pages/theSameCityConcrete/theSameCityConcrete.wxml-->
+<view class="cu-timeline">
+  
+  <block wx:for="{{theSameDay}}" wx:for-index="id">
+  <view class="cu-time">{{item.day}}</view>
+  <view class="cu-item cur icon-evaluate_fill" >  
+    <view id='{{id}}' class="content bg-green shadow-blur" bindtap='toTheConcretePage'>
+      <text id='{{id}}' >{{item.myRecordContent}}</text> 
+    </view>
+  </view>
+  </block>
+</view>

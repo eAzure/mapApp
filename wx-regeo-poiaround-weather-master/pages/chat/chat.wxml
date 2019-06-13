@@ -1,0 +1,48 @@
+<!--pages/chat/chat.wxml-->
+
+<view class="cu-chat" wx:for="{{messageList}}">
+
+<view wx:if="{{item.userID ==userid}}">
+
+
+  <view class="cu-item self">
+    <view class="main">
+      <view class="content bg-green shadow">
+        <text>{{item.chatContent}}</text>
+      </view>
+    </view>
+    <view class="cu-avatar radius" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+    <view class="date">{{item.chatTime}}</view>
+  </view>
+
+</view>
+
+<view wx:else>
+
+  <view class="cu-item">
+    <view class="cu-avatar radius" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></view>
+    <view class="main">
+      <view class="content shadow">
+        <text>{{item.chatContent}}</text>
+      </view>
+    </view>
+    <view class="date "> {{item.chatTime}}</view>
+  </view>
+
+</view>
+
+</view>
+
+
+
+<view class="cu-bar foot input" style="bottom:{{InputBottom}}px">
+  <view class="action">
+    <text class="icon-sound text-grey"></text>
+  </view>
+  <input class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" bindinput='getTheChatContent' value="{{theChatContent}}"></input>
+  <view class="action">
+    <text class="icon-emojifill text-grey"></text>
+  </view>
+  <button class="cu-btn bg-green shadow" bindtap='send'>发送</button>
+</view>
+

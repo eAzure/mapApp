@@ -1,0 +1,15 @@
+<!--pages/theSameCityMark/theSameCityMark.wxml-->
+<view class="img_box">
+  <image src="{{src}}"></image>
+</view>
+<view class="map_text">
+  <view class='map_content'>
+  <view>
+    <text class="h1">{{textData.name}}</text>
+    <text>{{textData.desc}}</text>
+  </view>
+  <view class="margin-tb-sm text-center"role=""aria-label="">
+     <button class="cu-btn round bg-olive"role="button" aria-label=""aria-disabled="false" bindtap='toTheSameCityConcretePage'>详细信息</button>
+  </view>
+  </view>
+</view>
