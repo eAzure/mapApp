@@ -162,8 +162,8 @@ App({
     startLongitude:"",
     endLatitude:"",
     endLongitude:"",
-    appid:"wxf89afedeb0d5fb8d",
-    secret:"a0aa25fb2b50f8f29849dcaa570bb4e5",
+    appid:"***",
+    secret:"***",
     openid:"",
     userid:"",
     //导入colorUI的部分
